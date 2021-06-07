@@ -41,7 +41,7 @@ import {
                     <FormLabel>E-mail</FormLabel>
                     <InputGroup>
                         <InputLeftElement pointerEvents="none" children={<Icon as={FaEnvelope} color="gray.300"/>} />
-                        <Input type="email" placeholder="Digite seu e-mail" />
+                        <Input type="email" focusBorderColor={colors.primary} placeholder="Digite seu e-mail" />
                     </InputGroup>
                 </FormControl>
 
@@ -49,7 +49,7 @@ import {
                     <FormLabel>Senha</FormLabel>
                     <InputGroup>
                         <InputLeftElement pointerEvents="none" children={<Icon as={FaLock} color="gray.300"/>} />
-                        <Input type="passoword" placeholder="Digite sua senha" />
+                        <Input type="passoword" focusBorderColor={colors.primary} placeholder="Digite sua senha" />
                     </InputGroup>
                 </FormControl>
 
