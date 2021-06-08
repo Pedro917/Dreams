@@ -1,5 +1,6 @@
 import React from "react";
 import { FaEnvelope, FaLock, FaPaperPlane } from "react-icons/fa";
+import { useForm } from "react-hook-form";
 import {
     Button,
     Flex,
@@ -14,12 +15,16 @@ import {
     Center,
     Icon,
     Box,
-    useMediaQuery
+    useMediaQuery,
   } from '@chakra-ui/react';
+
+  import { ToastSuccess } from "../../components/Toast"
 
   import HeroImage from "../../assets/img/hero-image.svg"
   
   const Login = () => {
+
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
     const [isMobile] = useMediaQuery("(min-width: 992px)")
 
@@ -30,29 +35,63 @@ import {
         light: "#f4f3f9",
     }
 
+    function onLogin(value){
+      // ToastSuccess(JSON.stringify(value))
+      console.log(value)
+    }
+
+    let senha = watch("password")
+    console.log(senha)
+    console.log(errors)
+
     return (
         <Stack minH={'100vh'} direction={isMobile ? "row" : "column"} bg={colors.light} p={20}>
           <Flex p={8} flex={1} align={'center'} justify={'center'}>
-            <Stack spacing={6} w={'full'} maxW={'md'} sx={{userSelect: "none"}}>
+            <Stack
+              as="form"
+              spacing={6}
+              w={'full'}
+              maxW={'md'}
+              sx={{userSelect: "none"}}
+              id="form-login"
+              onSubmit={handleSubmit(onLogin)}
+            >
                 <Center>
                     <Heading color={colors.primary} fontSize={'2xl'}>Realize o seu login</Heading>
                 </Center>
                 <FormControl id="email">
                     <FormLabel>E-mail</FormLabel>
                     <InputGroup>
-                        <InputLeftElement pointerEvents="none" children={<Icon as={FaEnvelope} color="gray.300"/>} />
-                        <Input type="email" focusBorderColor={colors.primary} placeholder="Digite seu e-mail" />
+                        <InputLeftElement
+                          pointerEvents="none"
+                          children={<Icon as={FaEnvelope}
+                          color="gray.300"
+                        />} />
+                        <Input
+                          type="email"
+                          focusBorderColor={colors.primary}
+                          placeholder="Digite seu e-mail"
+                          {...register("email", { required: true })}
+                        />
                     </InputGroup>
                 </FormControl>
 
                 <FormControl id="password">
                     <FormLabel>Senha</FormLabel>
                     <InputGroup>
-                        <InputLeftElement pointerEvents="none" children={<Icon as={FaLock} color="gray.300"/>} />
-                        <Input type="passoword" focusBorderColor={colors.primary} placeholder="Digite sua senha" />
+                        <InputLeftElement
+                          pointerEvents="none"
+                          children={<Icon as={FaLock}
+                          color="gray.300"
+                        />} />
+                        <Input
+                          type="password"
+                          focusBorderColor={colors.primary}
+                          placeholder="Digite sua senha"
+                          {...register("password", { required: true })}
+                        />
                     </InputGroup>
                 </FormControl>
-
                 <Box
                     as={Button}
                     bg={colors.primary}
@@ -64,6 +103,8 @@ import {
                     variant={'solid'}
                     leftIcon={<Icon as={FaPaperPlane} color="white.300"/>}
                     mt="20px"
+                    form="form-login"
+                    type="submit"
                 >
                     Logar
                 </Box>
